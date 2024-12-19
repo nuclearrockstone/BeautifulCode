@@ -1,4 +1,5 @@
 import gradio as gr
+import os
 from html2image import Html2Image
 from pygments import highlight
 from pygments.lexers import PythonLexer
@@ -7,7 +8,7 @@ from pygments.formatters import HtmlFormatter
 import re
 from colorsys import rgb_to_hls, hls_to_rgb
 
-hti = Html2Image(browser="chrome")
+hti = Html2Image(browser="chrome",output_path='img')
 
 COLOR_BAR    ="rgb(171, 176, 182)"
 COLOR_WINDOW ="rgb(243, 243, 243)"
@@ -90,11 +91,16 @@ def Wrap_Code(code,color_bar="rgb(171, 176, 182)",color_window="rgb(243, 243, 24
     """
     return FULL_HTML
 
-def Generate_Image(code,color_bar="rgb(171, 176, 182)",color_window="rgb(243, 243, 243)"):
-    hti.size = (20*Code_Count(code)[0], 45*Code_Count(code)[1]+60)
-    print(45*Code_Count(code)[1]+20)
-    hti.screenshot(html_str=Wrap_Code(code,color_bar,color_window),save_as='code.png')
-    return 'code.png'
+def Generate_Image(code,request: gr.Request,color_bar="rgb(171, 176, 182)",color_window="rgb(243, 243, 243)"):
+    if code == "":
+        raise gr.Error(" No Code Input 💥!", duration=5)
+    else:
+        hash = request.session_hash
+        output_dir = os.path.join("img", f'code_{hash}.png')
+        hti.size = (20*Code_Count(code)[0], 45*Code_Count(code)[1]+60)
+        print(45*Code_Count(code)[1]+20)
+        hti.screenshot(html_str=Wrap_Code(code,color_bar,color_window),save_as = f'code_{hash}.png')
+        return output_dir
 
 with gr.Blocks(css=GRADIO_CUSTOM_CSS) as beautifulcode:
     with gr.Row(equal_height=True):
