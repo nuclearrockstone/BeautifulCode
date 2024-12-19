@@ -1,0 +1,3 @@
+gradio
+html2image
+pygments
