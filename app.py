@@ -63,7 +63,7 @@ def Wrap_Code(code,color_bar="rgb(171, 176, 182)",color_window="rgb(243, 243, 24
     </div>
     """.format(MAX_CHAR,color_bar)
     CUSTOM_CSS  = """
-    .normal,.p,.nb,.n,.s1,.sa,.k,.nf{{ 
+    .normal,.p,.nb,.n,.s1,.sa,.k,.nf,.hll,.c,.err,.k,.o,.ch,.cm,.cp,.cpf,.c1,.cs,.gd,.ge,.ges,.gr,.gh,.gi,.go,.gp,.gs,.gu,.gt,.kc,.kd,.kn,.kp,.kr,.kt,.m,.s,.na,.nb,.nc,.no,.nd,.ni,.ne,.nf,.nl,.nn,.nt,.nv,.ow,.w,.mb,.mf,.mh,.mi,.mo,.sa,.sb,.sc,.dl,.sd,.s2,.se,.sh,.si,.sx,.sr,.s1,.ss,.bp,.fm,.vc,.vg,.vi,.vm,.il{{ 
             font-size:30px;
             height:35px;
     }}
