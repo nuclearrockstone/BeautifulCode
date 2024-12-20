@@ -18,7 +18,7 @@ def greet(name):
     print(f'Hello, {name}!')
 greet('World')
 '''
-GRADIO_CUSTOM_CSS = ".gradio-container-5-9-0 .prose table, .gradio-container-5-9-0 .prose tr, .gradio-container-5-9-0 .prose td, .gradio-container-5-9-0 .prose th{border:none}"
+GRADIO_CUSTOM_CSS = " .prose table, .prose tr, .prose td, .prose th{border:none}"
 
 
 def Lighten_Color(rgba_str, factor=0.5):
@@ -103,14 +103,20 @@ def Generate_Image(code,request: gr.Request,color_bar="rgb(171, 176, 182)",color
         return output_dir
 
 with gr.Blocks(css=GRADIO_CUSTOM_CSS) as beautifulcode:
+    with gr.Row():
+        gr.Markdown(
+    """
+    # Beautiful Code
+    Paste you Code Get Image.
+    """)
     with gr.Row(equal_height=True):
         with gr.Column():
             input_code = gr.Code(language="python")
             
             with gr.Row(equal_height=True):
-                color_follow=gr.Checkbox()
-                cp_bar = gr.ColorPicker(value=COLOR_BAR)
-                cp_window = gr.ColorPicker(value=COLOR_WINDOW)                
+                color_follow=gr.Checkbox(label="Color Sync")
+                cp_bar = gr.ColorPicker(value=COLOR_BAR,label="Bar Color")
+                cp_window = gr.ColorPicker(value=COLOR_WINDOW,label="Window Color")                
                 def Cp_Bar_Fun(code,cp_bar,cp_window,flag):
 
                     if flag and code!="":
@@ -141,7 +147,7 @@ with gr.Blocks(css=GRADIO_CUSTOM_CSS) as beautifulcode:
         cp_bar.input(Cp_Bar_Fun,inputs=[input_code,cp_bar,cp_window,color_follow],outputs=[output,cp_window])
         cp_window.input(Cp_Window_Fun,inputs=[input_code,cp_bar,cp_window,color_follow],outputs=[output,cp_bar])
     with gr.Row():
-        generate = gr.Button()
+        generate = gr.Button(value="Generate Image")
         image = gr.Image(type="filepath",label="Image")
         generate.click(Generate_Image,inputs=[input_code,cp_bar,cp_window],outputs=image)
     with gr.Row():
