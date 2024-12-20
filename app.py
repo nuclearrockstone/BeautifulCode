@@ -52,7 +52,6 @@ def Code_Count(line_code):
     return max(len(line) for line in lines),len(lines)
 
 def Wrap_Code(code,color_bar="rgb(171, 176, 182)",color_window="rgb(243, 243, 243)"):
-    print(3)
     formatter = HtmlFormatter(style='colorful', linenos=True,wrapcode=True)
     MAX_CHAR = 20*Code_Count(code)[0]
 
@@ -98,7 +97,6 @@ def Generate_Image(code,request: gr.Request,color_bar="rgb(171, 176, 182)",color
         hash = request.session_hash
         output_dir = os.path.join("img", f'code_{hash}.png')
         hti.size = (20*Code_Count(code)[0], 45*Code_Count(code)[1]+60)
-        print(45*Code_Count(code)[1]+20)
         hti.screenshot(html_str=Wrap_Code(code,color_bar,color_window),save_as = f'code_{hash}.png')
         return output_dir
 
